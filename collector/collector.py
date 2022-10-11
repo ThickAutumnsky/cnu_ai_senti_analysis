@@ -31,7 +31,21 @@ title = title[0].text
 
 print(f'뉴스제목:{title}')
 
-article = doc.select("div.news_view fs_type1")
+# 본문 긁어오기
+
+# request로 해당 url의 소스코드 전체 가져오기
+# BeautifulSoup(bs4) 로 넘겨주기
+
+contents = doc.select("section p") # section 아래 p 가져오기
+
+content = ""
+
+for line in contents: #순서대로 p를 가져와 Line에 넣고 코드 실행
+    content += line.get_text()
+
+# p1 p2 p3... 복수의 본문 포함
+
+print(f'내용:{content}')
 
 #python은 []:List Type
 # index 0 1 2 3 4

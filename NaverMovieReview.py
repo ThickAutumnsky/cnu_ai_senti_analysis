@@ -2,6 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+import re
 
 ################
 # 영화 제목 수집 #
@@ -25,4 +26,13 @@ def movie_review_crawler(movie_code):
     title = movie_title_crawler(movie_code)
     print(title)
 
-    # set {제목, 리뷰, 평점}
+    # set {제목, 리뷰, 평점, 작성자, 작성일자}
+
+    url = f"https://movie.naver.com/movie/bi/mi/pointWriteFormList.naver?code={movie_code}&type=after&isActualPointWriteExecute=false&isMileageSubscriptionAlready=false&isMileageSubscriptionReject=false&page=1"
+    result = requests.get(url)
+    doc = BeautifulSoup(result.text,'html.parser')
+    all_count = doc.select('strong.total > em')[0].get_text()
+    numbers = re.sub(r'[^0-9]','',all_count)
+    print(int(numbers)/10)
+
+    # for
